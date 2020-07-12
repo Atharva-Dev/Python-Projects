@@ -9,7 +9,7 @@ class PathFinder :
 
     def __init__(self):
         self.win = Tk()
-        
+
         self.clear()
 
     def clear(self):
@@ -25,7 +25,7 @@ class PathFinder :
         self.launch = None
         self.path = []
         self.setOperations()
-    
+
     def prepareNodes(self):
         for i in range(self.grid_size):
             for j in range(self.grid_size):
@@ -43,7 +43,7 @@ class PathFinder :
                 self.visited[self.grid_size*i + j] = False
                 self.accessable[self.grid_size*i + j] = True
 
-                
+
 
     def createLayout(self):
         for i in range(self.grid_size):
@@ -55,8 +55,8 @@ class PathFinder :
                 buttonRow[j].grid(row = i, column = j)
             self.buttons.append(buttonRow)
         self.grid_Layout.grid(row = 0, column = 0)
-        
-    
+
+
     def setOperations(self):
         e =Entry(self.operations_layout,fg='white',text='Enter Grid Size')
         create = Button(self.operations_layout, text="create", command = lambda e=e :self.create(e.get()))
@@ -69,7 +69,7 @@ class PathFinder :
         self.launch = Button(self.operations_layout, text = "Go", command= lambda o=s: [self.findPath(o),self.show()])
         self.launch.grid()
         self.operations_layout.grid(row = 0, column = 1)
-    
+
     def findPath(self,e):
         print('here')
         if e.get() == "DFS":
@@ -143,7 +143,7 @@ class PathFinder :
         return None
 
 
-    
+
 
     def display(self,n):
         if n != self.destination:
@@ -162,7 +162,7 @@ class PathFinder :
             self.buttons[i][j].configure(bg = 'white')
             time.sleep(0.1)
             self.win.update()
-        
+
 
 def toGrid(n):
     n = int(n)
@@ -181,9 +181,3 @@ if __name__ == "__main__":
     # popup.mainloop()
     pf = PathFinder()
     pf.win.mainloop()
-
-
-
-
-
-
