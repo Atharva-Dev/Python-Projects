@@ -24,6 +24,7 @@ class PathFinder :
         self.destination = None
         self.launch = None
         self.path = []
+        self.instruction = Label(self.win)
         self.setOperations()
 
     def prepareNodes(self):
@@ -58,6 +59,8 @@ class PathFinder :
 
 
     def setOperations(self):
+        self.instruction['text'] = 'Enter grid size and hit create'
+        self.instruction.grid()
         e =Entry(self.operations_layout,fg='white',text='Enter Grid Size')
         create = Button(self.operations_layout, text="create", command = lambda e=e :self.create(e.get()))
         e.grid()
@@ -83,14 +86,17 @@ class PathFinder :
         self.grid_size = n
         self.prepareNodes()
         self.createLayout()
+        self.instruction['text'] = 'Click on a block to set starting node'
 
     def change(self, i, j):
         if self.source == None:
             self.source = self.grid_size*i + j
             self.buttons[i][j]['bg'] = '#73D216'
+            self.instruction['text'] = 'Click on a block to set Destination node'
         elif self.destination == None:
             self.destination = self.grid_size*i + j
             self.buttons[i][j]['bg'] = '#EDD400'
+            self.instruction['text'] = 'Click on a block to set obstracles \n select a traversal algorithm\n and hit go once done !'
 
         else:
             if self.buttons[i][j]['bg'] == '#888A85':
@@ -155,13 +161,17 @@ class PathFinder :
 
 
     def show(self):
-        l = self.path[::-1]
-        for index in l:
-            i = index//self.grid_size
-            j = index % self.grid_size
-            self.buttons[i][j].configure(bg = 'white')
-            time.sleep(0.1)
-            self.win.update()
+        if(self.path == []):
+            self.instruction['text'] = 'No path found'
+
+        else:
+            l = self.path[::-1]
+            for index in l:
+                i = index//self.grid_size
+                j = index % self.grid_size
+                self.buttons[i][j].configure(bg = 'white')
+                time.sleep(0.1)
+                self.win.update()
 
 
 def toGrid(n):
